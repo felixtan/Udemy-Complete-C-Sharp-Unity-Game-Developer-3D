@@ -97,20 +97,26 @@ public class Hacker : MonoBehaviour
         }
         else
         {
-            print("sorry, you can't hack that yet.");
+            Terminal.WriteLine("Sorry, you can't hack that yet.");
         }
     }
 
     void HandleWaitingForPasswordScreen(string input)
     {
-        if (input == password)
+        if (input == "menu")
+        {
+            level = 0;
+            currentScreen = Screen.MainMenu;
+            ShowMainMenu();
+        }
+        else if (input == password)
         {
             currentScreen = Screen.Win;
             HandleWinScreen();
         }
         else
         {
-            Terminal.WriteLine("Incorrect password");
+            Terminal.WriteLine("Incorrect password\n");
         }
     }
 
@@ -142,6 +148,9 @@ public class Hacker : MonoBehaviour
     void StartGame()
     {
         SetPassword();
-        Terminal.WriteLine("\nPlease enter the password:");
+        Terminal.ClearScreen();
+        Terminal.WriteLine("\n(Enter \"menu\" to return to the menu)");
+        Terminal.WriteLine("Please enter the password:");
+        
     }
 }
