@@ -538,7 +538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rcsThrust: 100
-  mainThrust: 20
+  mainThrust: 15
 --- !u!1001 &4851223172079253611
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -61,4 +61,20 @@ public class Rocket : MonoBehaviour
             audioSource.Stop();
         }
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Friendly":
+                print("OK");
+                break;
+            case "Deadly":
+                print("Dead");
+                break;
+            default:
+                print("?");
+                break;
+        }
+    }
 }
