@@ -13,14 +13,20 @@ public class Rocket : MonoBehaviour
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip successSound;
 
+    [SerializeField] ParticleSystem mainEngineParticles;
+    [SerializeField] ParticleSystem deathParticles;
+    [SerializeField] ParticleSystem successParticles;
+
     enum State { Alive, Dying, Transcending };
     State state = State.Alive;
     Rigidbody rigidBody;    // ref to Rigidbody of rocket
     AudioSource audioSource;
+    Scene currentScene;
 
     // Start is called before the first frame update
     void Start()
     {
+        currentScene = SceneManager.GetActiveScene();
         rigidBody = GetComponent<Rigidbody>();  // only acts of Rigidbody components; c# generic
                                                 // what if there are multiple Rigidbodys?
         audioSource = GetComponent<AudioSource>();
@@ -29,6 +35,8 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // currentScene = SceneManager.GetActiveScene();
+
         if (state == State.Alive)
         {
             RespondToThrustInput();
@@ -64,6 +72,7 @@ public class Rocket : MonoBehaviour
         else
         {
             audioSource.Stop();
+            mainEngineParticles.Stop();
         }
     }
 
@@ -75,11 +84,14 @@ public class Rocket : MonoBehaviour
         {
             audioSource.PlayOneShot(mainEngine);    // play specified AudioClip, default volume scale is 1.0F  
         }
+
+        mainEngineParticles.Play();
     }
 
     private void LoadNextLevel()
     {
-        SceneManager.LoadScene(1);  // go to level 2
+        int nextSceneBuildIndex = Math.Min(currentScene.buildIndex + 1, 1);
+        SceneManager.LoadScene(nextSceneBuildIndex);
     }
 
     private void LoadFirstLevel()
@@ -91,6 +103,7 @@ public class Rocket : MonoBehaviour
     {
         audioSource.Stop();
         audioSource.PlayOneShot(deathSound);
+        deathParticles.Play();
         state = State.Dying;
         Invoke("LoadFirstLevel", 1f);
     }
@@ -99,6 +112,7 @@ public class Rocket : MonoBehaviour
     {
         audioSource.Stop();
         audioSource.PlayOneShot(successSound);
+        successParticles.Play();
         state = State.Transcending;
         Invoke("LoadNextLevel", 0.5f);    // load next scene after 0.5s
     }
