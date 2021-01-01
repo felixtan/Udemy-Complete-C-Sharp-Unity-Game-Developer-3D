@@ -735,6 +735,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Terrain
       objectReference: {fileID: 0}
+    - target: {fileID: 986138560725149364, guid: a2ac5d0a8473642cdafeb92e724897db,
+        type: 3}
+      propertyPath: m_TagString
+      value: Deadly
+      objectReference: {fileID: 0}
     - target: {fileID: 4613662834882930557, guid: a2ac5d0a8473642cdafeb92e724897db,
         type: 3}
       propertyPath: m_RootOrder

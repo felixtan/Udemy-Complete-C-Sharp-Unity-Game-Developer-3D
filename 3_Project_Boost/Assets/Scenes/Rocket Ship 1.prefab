@@ -539,6 +539,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rcsThrust: 100
   mainThrust: 25
+  mainEngine: {fileID: 8300000, guid: 48d080d9af17c4c19bb9fd04f3613f7a, type: 3}
+  deathSound: {fileID: 8300000, guid: 3cf2067f5e15b43e18ac77c3559f385e, type: 3}
 --- !u!1001 &4851223172079253611
 PrefabInstance:
   m_ObjectHideFlags: 0

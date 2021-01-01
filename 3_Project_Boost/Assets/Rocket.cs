@@ -6,9 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
-
+    // allows for manipulation in the Inspector
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
+    [SerializeField] AudioClip mainEngine;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip successSound;
+
     enum State { Alive, Dying, Transcending };
     State state = State.Alive;
     Rigidbody rigidBody;    // ref to Rigidbody of rocket
@@ -27,12 +31,12 @@ public class Rocket : MonoBehaviour
     {
         if (state == State.Alive)
         {
-            Thrust();
-            Rotate();
+            RespondToThrustInput();
+            RespondToThrustRotate();
         }
     }
 
-    private void Rotate()
+    private void RespondToThrustRotate()
     {
         rigidBody.freezeRotation = true;    // take manual control of rotation
 
@@ -51,20 +55,25 @@ public class Rocket : MonoBehaviour
         rigidBody.freezeRotation = false;   // resume physics control of rotation
     }
 
-    private void Thrust()
+    private void RespondToThrustInput()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rigidBody.AddRelativeForce(Vector3.up * mainThrust);   // add forces relative to direction
-                                                      // behaviors changes w/ Rigidbody's mass
-            if (!audioSource.isPlaying)
-            {
-                audioSource.Play(); // prevent layering BRRRT sound   
-            }
+            ApplyThrust();
         }
         else
         {
             audioSource.Stop();
+        }
+    }
+
+    private void ApplyThrust()
+    {
+        rigidBody.AddRelativeForce(Vector3.up * mainThrust);   // add forces relative to direction
+                                                    // behaviors changes w/ Rigidbody's mass
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(mainEngine);    // play specified AudioClip, default volume scale is 1.0F  
         }
     }
 
@@ -78,6 +87,22 @@ public class Rocket : MonoBehaviour
         SceneManager.LoadScene(0);  // go to level 1
     }
 
+    private void StartDeathSequence()
+    {
+        audioSource.Stop();
+        audioSource.PlayOneShot(deathSound);
+        state = State.Dying;
+        Invoke("LoadFirstLevel", 1f);
+    }
+
+    private void StartFinishSequence()
+    {
+        audioSource.Stop();
+        audioSource.PlayOneShot(successSound);
+        state = State.Transcending;
+        Invoke("LoadNextLevel", 0.5f);    // load next scene after 0.5s
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (state != State.Alive) { return; }
@@ -87,12 +112,10 @@ public class Rocket : MonoBehaviour
             case "Friendly":
                 break;
             case "Deadly":
-                state = State.Dying;
-                Invoke("LoadFirstLevel", 0f);
+                StartDeathSequence();
                 break;
             case "Finish":
-                state = State.Transcending;
-                Invoke("LoadNextLevel", 1f);    // load next scene after 1s
+                StartFinishSequence();
                 break;
             default:
                 break;
