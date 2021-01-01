@@ -8,7 +8,7 @@ public class Rocket : MonoBehaviour
 {
     // allows for manipulation in the Inspector
     [SerializeField] float rcsThrust = 100f;
-    [SerializeField] float mainThrust = 100f;
+    [SerializeField] float mainThrust = 1500f;
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip successSound;
@@ -78,7 +78,7 @@ public class Rocket : MonoBehaviour
 
     private void ApplyThrust()
     {
-        rigidBody.AddRelativeForce(Vector3.up * mainThrust);   // add forces relative to direction
+        rigidBody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);   // add forces relative to direction
                                                     // behaviors changes w/ Rigidbody's mass
         if (!audioSource.isPlaying)
         {
@@ -90,7 +90,7 @@ public class Rocket : MonoBehaviour
 
     private void LoadNextLevel()
     {
-        int nextSceneBuildIndex = Math.Min(currentScene.buildIndex + 1, 1);
+        int nextSceneBuildIndex = Math.Min(currentScene.buildIndex + 1, 2);
         SceneManager.LoadScene(nextSceneBuildIndex);
     }
 
