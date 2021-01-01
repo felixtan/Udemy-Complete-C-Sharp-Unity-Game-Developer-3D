@@ -13,10 +13,10 @@ public class Rocket : MonoBehaviour
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip successSound;
-
     [SerializeField] ParticleSystem mainEngineParticles;
     [SerializeField] ParticleSystem deathParticles;
     [SerializeField] ParticleSystem successParticles;
+    [SerializeField] bool collisionsDisabled = false;
 
     enum State { Alive, Dying, Transcending };
     State state = State.Alive;
@@ -36,12 +36,27 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // currentScene = SceneManager.GetActiveScene();
+        if (Debug.isDebugBuild)
+        {
+            RespondToDebugKeys();
+        }
 
         if (state == State.Alive)
         {
             RespondToThrustInput();
             RespondToThrustRotate();
+        }
+    }
+
+    private void RespondToDebugKeys()
+    {
+        if (Input.GetKey(KeyCode.L))
+        {
+            LoadNextLevel();
+        }
+        else if (Input.GetKey(KeyCode.C))
+        {
+            collisionsDisabled = !collisionsDisabled;
         }
     }
 
@@ -91,7 +106,7 @@ public class Rocket : MonoBehaviour
 
     private void LoadNextLevel()
     {
-        int nextSceneBuildIndex = Math.Min(currentScene.buildIndex + 1, 2);
+        int nextSceneBuildIndex = Math.Min(currentScene.buildIndex + 1, 3);
         SceneManager.LoadScene(nextSceneBuildIndex);
     }
 
@@ -120,7 +135,7 @@ public class Rocket : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (state != State.Alive) { return; }
+        if (state != State.Alive || collisionsDisabled) { return; }
 
         switch (collision.gameObject.tag)
         {
