@@ -9,6 +9,7 @@ public class Rocket : MonoBehaviour
     // allows for manipulation in the Inspector
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 1500f;
+    [SerializeField] float levelLoadDelay = 0.5f;
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip successSound;
@@ -105,7 +106,7 @@ public class Rocket : MonoBehaviour
         audioSource.PlayOneShot(deathSound);
         deathParticles.Play();
         state = State.Dying;
-        Invoke("LoadFirstLevel", 1f);
+        Invoke("LoadFirstLevel", levelLoadDelay);
     }
 
     private void StartFinishSequence()
@@ -114,7 +115,7 @@ public class Rocket : MonoBehaviour
         audioSource.PlayOneShot(successSound);
         successParticles.Play();
         state = State.Transcending;
-        Invoke("LoadNextLevel", 0.5f);    // load next scene after 0.5s
+        Invoke("LoadNextLevel", levelLoadDelay);
     }
 
     void OnCollisionEnter(Collision collision)
