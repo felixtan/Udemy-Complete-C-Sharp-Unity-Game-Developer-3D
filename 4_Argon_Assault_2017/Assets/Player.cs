@@ -12,13 +12,13 @@ public class Player : MonoBehaviour {
 
 	// shows tooltip with info in inspector
 	[Tooltip("In ms^-1")][SerializeField] float xSpeed = 100f;
-	[Tooltip("In m")][SerializeField] float xRange = 20f;
+	[Tooltip("In m")][SerializeField] float xRange = 15f;
 	[Tooltip("In ms^-1")][SerializeField] float ySpeed = 100f;
-	[Tooltip("In m")][SerializeField] float yRange = 5f;
-	[SerializeField] float positionPitchFactor = -5f;	// ratio of change in position to pitch
-	[SerializeField] float controlPitchFactor = -2f;
-	[SerializeField] float positionYawFactor = -12f;
-	[SerializeField] float throwRollFactor = -25f;
+	[Tooltip("In m")][SerializeField] float yRange = 15f;
+	[SerializeField] float positionPitchFactor = 1f;	// ratio of change in position to pitch
+	[SerializeField] float controlPitchFactor = 1f;
+	[SerializeField] float positionYawFactor = 2f;
+	[SerializeField] float throwRollFactor = 2f;
 
 	// Use this for initialization
 	void Start () {
