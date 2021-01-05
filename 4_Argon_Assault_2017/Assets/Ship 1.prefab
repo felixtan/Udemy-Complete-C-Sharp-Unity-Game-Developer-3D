@@ -182,6 +182,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4889829892031512}
+  - component: {fileID: 114757243870089128}
   m_Layer: 0
   m_Name: Ship 1
   m_TagString: Untagged
@@ -528,8 +529,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1569597819531462}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.038517, y: -3.19491, z: -27.220453}
+  m_LocalRotation: {x: -0.17943081, y: -0.11127141, z: -0.030330407, w: 0.9769869}
+  m_LocalPosition: {x: -7.71, y: -2.83, z: 26.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4006132480414478}
@@ -539,7 +540,7 @@ Transform:
   - {fileID: 4919624292205768}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -20.938002, y: -12.776001, z: -1.1860001}
 --- !u!4 &4919624292205768
 Transform:
   m_ObjectHideFlags: 1
@@ -920,3 +921,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.26414672, y: 2.0013542, z: 3.0129852}
   m_Center: {x: 0, y: -0.63170683, z: -1.4124641}
+--- !u!114 &114757243870089128
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569597819531462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf18b72d71b8434e8b7fd8acf0911c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xSpeed: 4
+  xRange: 5
+  ySpeed: 4
+  yRange: 5
+  positionPitchFactor: -5
