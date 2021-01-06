@@ -3,21 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class Player : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
 	float initX;
 	float initY;
 	float xThrow;
 	float yThrow;
+	bool controlsEnabled = true;
 
-	// shows tooltip with info in inspector
+	[Header("General")]
 	[Tooltip("In ms^-1")][SerializeField] float xSpeed = 100f;
 	[Tooltip("In m")][SerializeField] float xRange = 15f;
 	[Tooltip("In ms^-1")][SerializeField] float ySpeed = 100f;
 	[Tooltip("In m")][SerializeField] float yRange = 15f;
+
+	[Header("Screen-position Based")]
 	[SerializeField] float positionPitchFactor = 1f;	// ratio of change in position to pitch
-	[SerializeField] float controlPitchFactor = 1f;
 	[SerializeField] float positionYawFactor = 2f;
+	
+	[Header("Control-throw Based")]
+	[SerializeField] float controlPitchFactor = 1f;
 	[SerializeField] float throwRollFactor = 2f;
 
 	// Use this for initialization
@@ -29,8 +34,11 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		ProcessTranslation();
-		ProcessRotation();
+		if (controlsEnabled)
+		{
+			ProcessTranslation();
+			ProcessRotation();
+		}
 	}
 
 	private void ProcessTranslation()
@@ -71,13 +79,9 @@ public class Player : MonoBehaviour {
 		transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
 	}
 
-	private void OnCollisionEnter(Collision collision)
+	// called by string ref
+	void OnPlayerDeath()
 	{
-		print("Player collided with something");
-	}
-
-	private void OnTriggerEnter(Collider other)
-	{
-		print("Player triggered something");
+		controlsEnabled = false;
 	}
 }
