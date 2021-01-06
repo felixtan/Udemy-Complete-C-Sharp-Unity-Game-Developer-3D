@@ -7,6 +7,15 @@ public class MusicPlayer : MonoBehaviour
     // called before Start
     void Awake()
     {
-        DontDestroyOnLoad(this);	// keep game object alive
+        int numMusicPlayers = FindObjectsOfType<MusicPlayer>().Length;  // number of MusicPlayer objects in scene
+
+        if (numMusicPlayers > 1)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            DontDestroyOnLoad(this);	// keep game object alive
+        }
     }
 }
