@@ -937,3 +937,6 @@ MonoBehaviour:
   ySpeed: 4
   yRange: 5
   positionPitchFactor: -5
+  controlPitchFactor: 1
+  positionYawFactor: 2
+  throwRollFactor: 2

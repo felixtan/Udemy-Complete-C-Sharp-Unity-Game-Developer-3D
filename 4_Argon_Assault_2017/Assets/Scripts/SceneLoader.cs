@@ -3,15 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MusicPlayer : MonoBehaviour
-{
-    // called before Start
-    void Awake()
-    {
-        DontDestroyOnLoad(this);	// keep game object alive
-    }
+public class SceneLoader : MonoBehaviour {
 
-    // Start is called before the first frame update
+	 // Start is called before the first frame update
     void Start()
     {
         Invoke("LoadFirstScene", 2f);
