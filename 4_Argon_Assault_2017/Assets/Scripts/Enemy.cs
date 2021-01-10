@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		AddNonTriggerBoxCollider();
 	}
 	
 	// Update is called once per frame
@@ -14,6 +14,12 @@ public class Enemy : MonoBehaviour {
 		
 	}
 
+	// programatically add non-trigger box collider 
+	void AddNonTriggerBoxCollider()
+	{
+		Collider nonTriggerBoxCollider = gameObject.AddComponent<BoxCollider>();
+		nonTriggerBoxCollider.isTrigger = false;
+	}
 	void OnParticleCollision(GameObject other)
 	{
 		Destroy(gameObject);
