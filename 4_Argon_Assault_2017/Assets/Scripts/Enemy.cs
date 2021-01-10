@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour {
 	[SerializeField] GameObject deathFX;
 	[SerializeField] Transform parent;
 	[SerializeField] int scorePerHit = 1;
+	[SerializeField] int hitsRemaining = 10;
 	ScoreBoard scoreBoard;
 
 	// Use this for initialization
@@ -26,11 +27,22 @@ public class Enemy : MonoBehaviour {
 		Collider nonTriggerBoxCollider = gameObject.AddComponent<BoxCollider>();
 		nonTriggerBoxCollider.isTrigger = false;
 	}
-	void OnParticleCollision(GameObject other)
+
+	private void ProcessHit()
 	{
 		scoreBoard.ScoreHit(scorePerHit);
-		GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity);	// create deathFX object at enemy's position with no rotation
-		fx.transform.parent = parent;	// move death effect to parent and prevent them spawning at the root of the hierarchy
-		Destroy(gameObject);
+		hitsRemaining -= 1;
+	}
+	void OnParticleCollision(GameObject other)
+	{
+		
+		ProcessHit();
+
+		if (hitsRemaining < 1)
+		{
+			GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity);	// create deathFX object at enemy's position with no rotation
+			fx.transform.parent = parent;	// move death effect to parent and prevent them spawning at the root of the hierarchy
+			Destroy(gameObject);
+		}
 	}
 }
