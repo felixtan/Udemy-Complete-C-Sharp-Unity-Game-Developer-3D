@@ -55,8 +55,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4223755104225890}
-  - component: {fileID: 114011367757609428}
   - component: {fileID: 23448061885390984}
+  - component: {fileID: 114708278801186608}
+  - component: {fileID: 114571861247835450}
+  - component: {fileID: 114749416383549484}
   m_Layer: 0
   m_Name: Custom Cube
   m_TagString: Untagged
@@ -173,8 +175,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1426260026506298}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -15.11797, y: 27.232277, z: 2.9493942}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 4453721604461074}
@@ -657,7 +659,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1518654879647686}
-  m_Text: 99.99
+  m_Text: 0,0
   m_OffsetZ: 0
   m_CharacterSize: 0.05
   m_LineSpacing: 1
@@ -671,7 +673,7 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4278190080
---- !u!114 &114011367757609428
+--- !u!114 &114571861247835450
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -679,7 +681,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1426260026506298}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b02a91836487b4193b6098b309cc459e, type: 3}
+  m_Script: {fileID: 11500000, guid: f9fd6b7ddf69349e68f22772e07658e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114708278801186608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1426260026506298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6edb15b2b9f946acbbc1a58a733abc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridSize: 10
+--- !u!114 &114749416383549484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1426260026506298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6edb15b2b9f946acbbc1a58a733abc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gridSize: 10
@@ -696,7 +721,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1518654879647686}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4536726972994804}
