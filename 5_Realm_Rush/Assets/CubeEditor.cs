@@ -6,12 +6,18 @@ using UnityEngine;
 // this attribute tells callback functions to execute in edit mode as well
 [ExecuteInEditMode]
 [SelectionBase]
+[RequireComponent(typeof(Waypoint))]	// automatically adds Waypoint component to this object when created
 public class CubeEditor : MonoBehaviour {
 
 	[Tooltip("Size of snap increments")]
-	[SerializeField] [Range(1f, 20f)]float gridSize = 10f;
 
-	TextMesh textMesh;
+	Vector3 gridPos;
+	Waypoint waypoint;
+
+	private void Awake()
+	{
+		waypoint = GetComponent<Waypoint>();
+	}
 
 	void Update () {
 		UpdatePosition();
@@ -19,14 +25,23 @@ public class CubeEditor : MonoBehaviour {
 
 	void UpdatePosition()
 	{
-		Vector3 snapPos;
-		snapPos.x = Mathf.RoundToInt(transform.position.x / gridSize) * gridSize;
-		// snapPos.y = Mathf.RoundToInt(transform.position.y / gridSize) * gridSize;
-		snapPos.z = Mathf.RoundToInt(transform.position.z / gridSize) * gridSize;
-		transform.position = new Vector3(snapPos.x, 0f, snapPos.z);
+		SnapToGrid();
+		UpdateLabel();
+	}
 
-		textMesh = GetComponentInChildren<TextMesh>();
-		var labelText = (snapPos.x / gridSize) + "," + (snapPos.z / gridSize);
+	private void SnapToGrid()
+	{
+		int gridSize = waypoint.GetGridSize();
+		Vector2 gridPos = waypoint.GetGridPos(); 
+		transform.position = new Vector3(gridPos.x, 0f, gridPos.y);
+	}
+
+	private void UpdateLabel()
+	{
+		int gridSize = waypoint.GetGridSize();
+		Vector2 gridPos = waypoint.GetGridPos(); 
+		TextMesh textMesh = GetComponentInChildren<TextMesh>();
+		var labelText = (gridPos.x / gridSize) + "," + (gridPos.y / gridSize);
 		textMesh.text = labelText;
 		gameObject.name = labelText;
 	}
