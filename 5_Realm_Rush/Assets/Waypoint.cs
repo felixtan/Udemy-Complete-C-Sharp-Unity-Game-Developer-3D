@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour {
 
+	[Tooltip("Size of snap increments")]
 	const int gridSize = 10;	// dont let it be an instance var; make it uniform for all instances
 
 	// Use this for initialization
@@ -21,11 +22,17 @@ public class Waypoint : MonoBehaviour {
 		return gridSize;
 	}
 
-	public Vector2 GetGridPos()
+	public Vector2Int GetGridPos()
 	{
-		return new Vector2(
-			Mathf.RoundToInt(transform.position.x / gridSize) * gridSize,
-			Mathf.RoundToInt(transform.position.z / gridSize) * gridSize
+		return new Vector2Int(
+			Mathf.RoundToInt(transform.position.x / gridSize),
+			Mathf.RoundToInt(transform.position.z / gridSize)
 		);
+	}
+
+	public void SetTopColor(Color color)
+	{
+		MeshRenderer topMeshRenderer = transform.Find("Top").GetComponent<MeshRenderer>();
+		topMeshRenderer.material.color = color;
 	}
 }

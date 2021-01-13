@@ -28,7 +28,8 @@ public class EnemyMovement : MonoBehaviour {
 			Vector3 newPos = waypoint.transform.position;
 			newPos.y += gameObject.transform.localScale.y;	// adjust so enemy is "standing" on cube and not inside
 			transform.position = newPos;	// move enemy
-			print("Visiting block" + waypoint.name);
+			print("Visiting block " + waypoint.name);
+			SendMessage("ExploreNeighbors", waypoint);
 			yield return new WaitForSeconds(1f);	// returns execution to StartCoroutine	 
 		}
 

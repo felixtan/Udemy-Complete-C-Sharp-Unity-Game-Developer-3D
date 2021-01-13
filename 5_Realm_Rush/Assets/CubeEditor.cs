@@ -9,8 +9,6 @@ using UnityEngine;
 [RequireComponent(typeof(Waypoint))]	// automatically adds Waypoint component to this object when created
 public class CubeEditor : MonoBehaviour {
 
-	[Tooltip("Size of snap increments")]
-
 	Vector3 gridPos;
 	Waypoint waypoint;
 
@@ -33,7 +31,7 @@ public class CubeEditor : MonoBehaviour {
 	{
 		int gridSize = waypoint.GetGridSize();
 		Vector2 gridPos = waypoint.GetGridPos(); 
-		transform.position = new Vector3(gridPos.x, 0f, gridPos.y);
+		transform.position = new Vector3(gridPos.x * gridSize, 0f, gridPos.y * gridSize);
 	}
 
 	private void UpdateLabel()
@@ -41,7 +39,7 @@ public class CubeEditor : MonoBehaviour {
 		int gridSize = waypoint.GetGridSize();
 		Vector2 gridPos = waypoint.GetGridPos(); 
 		TextMesh textMesh = GetComponentInChildren<TextMesh>();
-		var labelText = (gridPos.x / gridSize) + "," + (gridPos.y / gridSize);
+		var labelText = (gridPos.x) + "," + (gridPos.y);
 		textMesh.text = labelText;
 		gameObject.name = labelText;
 	}
