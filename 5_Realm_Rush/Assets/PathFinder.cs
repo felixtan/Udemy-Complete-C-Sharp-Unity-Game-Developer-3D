@@ -12,30 +12,86 @@ public class PathFinder : MonoBehaviour {
 		Vector2Int.down,
 		Vector2Int.left
 	};
+	Queue<Waypoint> queue = new Queue<Waypoint>();
+	bool isRunning = true;
+	Waypoint searchCenter;
+	public List<Waypoint> path = new List<Waypoint>();
 
 	// Use this for initialization
 	void Start () {
-		LoadBlocks();
-		ColorStartAndEnd();
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
 	}
 
-	private void ExploreNeighbors(Waypoint wp)
+	public List<Waypoint> GetPath()
 	{
+		LoadBlocks();
+		ColorStartAndEnd();
+		BFS();
+		CreatePath();
+		return path;
+	}
+
+	private void CreatePath()
+	{
+		path.Add(endWp);
+		Waypoint prev = endWp.exploredFrom;
+		int stop = 0;
+		while (prev != startWp && stop < 50) 
+		{
+			path.Add(prev);
+			prev = prev.exploredFrom;
+			stop += 1;
+		}
+		path.Add(startWp);
+		path.Reverse();
+	}
+
+	private void BFS()
+	{
+		queue.Enqueue(startWp);
+
+		while (queue.Count > 0 && isRunning)
+		{
+			searchCenter = queue.Dequeue();
+
+			if (searchCenter == endWp)
+			{
+				print("Reached the end");
+				isRunning = false;
+				return;
+			}
+
+			QueueNewNeighbors();
+			startWp.isExplored = true;
+		}
+	}
+
+	private void QueueNewNeighbors()
+	{
+		if (!isRunning) return;
+
 		foreach (Vector2Int direction in directions)
 		{
-			Vector2Int exploring = wp.GetGridPos() + direction;
+			Vector2Int neighborCoords = searchCenter.GetGridPos() + direction;
 
-			try
+			if (grid.ContainsKey(neighborCoords))
 			{
-				grid[exploring].SetTopColor(Color.blue);
-			}
-			catch
-			{
-				// nothing
+				Waypoint neighbor = grid[neighborCoords];
+
+				if (neighbor.isExplored || queue.Contains(neighbor))
+				{
+					// nothing
+				}
+				else
+				{
+					queue.Enqueue(neighbor);
+					neighbor.exploredFrom = searchCenter;
+				}
 			}
 		}
 	}
@@ -46,21 +102,21 @@ public class PathFinder : MonoBehaviour {
 		endWp.SetTopColor(Color.magenta);
 	}
 
+	// define dictionary of coords to blocks
 	private void LoadBlocks()
 	{
 		var waypoints = FindObjectsOfType<Waypoint>();
 		foreach (Waypoint wp in waypoints)
 		{
 			var gridPos = wp.GetGridPos();
-			bool isOverlapping = grid.ContainsKey(gridPos);
-			if (isOverlapping)
+
+			if (grid.ContainsKey(gridPos))
 			{
 				//
 			}
 			else
 			{
 				grid.Add(gridPos, wp);
-				// wp.SetTopColor(Color.black);
 			}
 		}
 	}
