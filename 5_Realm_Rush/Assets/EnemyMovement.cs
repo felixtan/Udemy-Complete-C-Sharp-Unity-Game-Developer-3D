@@ -25,7 +25,7 @@ public class EnemyMovement : MonoBehaviour {
 			Vector3 newPos = waypoint.transform.position;
 			newPos.y += gameObject.transform.localScale.y;	// adjust so enemy is "standing" on cube and not inside
 			transform.position = newPos;	// move enemy
-			yield return new WaitForSeconds(1f);	// returns execution to StartCoroutine	 
+			yield return new WaitForSeconds(2f);	// returns execution to StartCoroutine	 
 		}
 	}
 }
