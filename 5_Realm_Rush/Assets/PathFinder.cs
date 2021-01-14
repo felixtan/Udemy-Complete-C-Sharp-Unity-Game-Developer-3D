@@ -15,7 +15,7 @@ public class PathFinder : MonoBehaviour {
 	Queue<Waypoint> queue = new Queue<Waypoint>();
 	bool isRunning = true;
 	Waypoint searchCenter;
-	public List<Waypoint> path = new List<Waypoint>();
+	List<Waypoint> path = new List<Waypoint>();
 
 	// Use this for initialization
 	void Start () {
@@ -40,13 +40,13 @@ public class PathFinder : MonoBehaviour {
 	{
 		path.Add(endWp);
 		Waypoint prev = endWp.exploredFrom;
-		int stop = 0;
-		while (prev != startWp && stop < 50) 
+
+		while (prev != startWp) 
 		{
 			path.Add(prev);
 			prev = prev.exploredFrom;
-			stop += 1;
 		}
+
 		path.Add(startWp);
 		path.Reverse();
 	}
@@ -61,38 +61,37 @@ public class PathFinder : MonoBehaviour {
 
 			if (searchCenter == endWp)
 			{
-				print("Reached the end");
 				isRunning = false;
 				return;
-			}
-
-			QueueNewNeighbors();
-			startWp.isExplored = true;
-		}
-	}
-
-	private void QueueNewNeighbors()
-	{
-		if (!isRunning) return;
-
-		foreach (Vector2Int direction in directions)
-		{
-			Vector2Int neighborCoords = searchCenter.GetGridPos() + direction;
-
-			if (grid.ContainsKey(neighborCoords))
+			} else if (searchCenter.isExplored)
 			{
-				Waypoint neighbor = grid[neighborCoords];
-
-				if (neighbor.isExplored || queue.Contains(neighbor))
-				{
-					// nothing
-				}
-				else
-				{
-					queue.Enqueue(neighbor);
-					neighbor.exploredFrom = searchCenter;
-				}
+				continue;
 			}
+			else
+			{
+				searchCenter.isExplored = true;
+
+				// enqueue neighbors
+				foreach (Vector2Int direction in directions)
+				{
+					Vector2Int neighborCoords = searchCenter.GetGridPos() + direction;
+
+					if (grid.ContainsKey(neighborCoords))
+					{
+						Waypoint neighbor = grid[neighborCoords];
+
+						if (neighbor.isExplored || queue.Contains(neighbor) || searchCenter.exploredFrom == neighbor)
+						{
+							// nothing
+						}
+						else
+						{
+							queue.Enqueue(neighbor);
+							neighbor.exploredFrom = searchCenter;
+						}
+					}
+				}
+			}			
 		}
 	}
 
