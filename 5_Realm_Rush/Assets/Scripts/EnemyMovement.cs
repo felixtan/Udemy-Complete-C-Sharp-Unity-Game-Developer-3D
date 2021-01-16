@@ -10,11 +10,6 @@ public class EnemyMovement : MonoBehaviour {
 		List<Waypoint> path = pathFinder.GetPath();
 		StartCoroutine(TraversePath(path));
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	// IEnumerator makes it a coroutine
 	IEnumerator TraversePath(List<Waypoint> path)

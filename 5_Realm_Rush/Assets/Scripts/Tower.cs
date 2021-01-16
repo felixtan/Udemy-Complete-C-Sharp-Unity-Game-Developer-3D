@@ -40,7 +40,9 @@ public class Tower : MonoBehaviour {
 	// toggle bullet particle emmission
 	private void Shoot(bool isActive)
 	{
-		var emissionModule = projectileParticle.emission;
-		emissionModule.enabled = isActive;
+		if (projectileParticle != null) {
+			var emissionModule = projectileParticle.emission;
+			emissionModule.enabled = isActive;
+		}
 	}
 }
