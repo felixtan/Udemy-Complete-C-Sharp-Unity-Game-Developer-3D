@@ -28,7 +28,7 @@ public class Tower : MonoBehaviour {
 	private void FireAtEnemy()
 	{
 		float distToEnemy = Vector3.Distance(targetEnemy.transform.position, gameObject.transform.position);
-		print("distToEnemy: " + distToEnemy);
+
 		if (distToEnemy <= attackRange)
 		{
 			Shoot(true);

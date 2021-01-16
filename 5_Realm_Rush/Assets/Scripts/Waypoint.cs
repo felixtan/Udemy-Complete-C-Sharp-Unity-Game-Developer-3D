@@ -9,6 +9,7 @@ public class Waypoint : MonoBehaviour {
 	Vector2Int gridPos;
 	public bool isExplored = false;
 	public Waypoint exploredFrom;
+	public bool isPlaceable = true;
 
 	// Use this for initialization
 	void Start () {
@@ -33,9 +34,11 @@ public class Waypoint : MonoBehaviour {
 		);
 	}
 
-	public void SetTopColor(Color color)
+	void OnMouseOver()
 	{
-		MeshRenderer topMeshRenderer = transform.Find("Top").GetComponent<MeshRenderer>();
-		topMeshRenderer.material.color = color;
+		if (Input.GetMouseButtonDown(0) && isPlaceable)
+		{
+			print(gameObject.name + "placeable");
+		}
 	}
 }

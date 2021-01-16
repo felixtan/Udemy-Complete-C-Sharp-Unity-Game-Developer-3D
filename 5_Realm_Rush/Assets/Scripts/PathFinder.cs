@@ -32,7 +32,6 @@ public class PathFinder : MonoBehaviour {
 		if (path.Count == 0)
 		{
 			LoadBlocks();
-			ColorStartAndEnd();
 			BFS();
 			CreatePath();
 		}
@@ -41,17 +40,23 @@ public class PathFinder : MonoBehaviour {
 
 	private void CreatePath()
 	{
-		path.Add(endWp);
+		SetAsPath(endWp);
 		Waypoint prev = endWp.exploredFrom;
 
 		while (prev != startWp) 
 		{
-			path.Add(prev);
+			SetAsPath(prev);
 			prev = prev.exploredFrom;
 		}
 
-		path.Add(startWp);
+		SetAsPath(startWp);
 		path.Reverse();
+	}
+
+	private void SetAsPath(Waypoint wp)
+	{
+		path.Add(wp);
+		wp.isPlaceable = false;
 	}
 
 	private void BFS()
@@ -96,12 +101,6 @@ public class PathFinder : MonoBehaviour {
 				}
 			}			
 		}
-	}
-
-	private void ColorStartAndEnd()
-	{
-		startWp.SetTopColor(Color.magenta);
-		endWp.SetTopColor(Color.magenta);
 	}
 
 	// define dictionary of coords to blocks
